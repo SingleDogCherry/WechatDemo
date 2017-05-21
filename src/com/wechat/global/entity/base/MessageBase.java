@@ -1,8 +1,7 @@
 package com.wechat.global.entity.base;
 
-import com.wechat.global.enums.MsgTypeEnum;
 
-public class MessageBase {
+public class MessageBase  extends ClassBase {
 	/** 开发者微信号 */
 	private String toUserName;
 	/** 发送方帐号（一个OpenID） */
@@ -56,7 +55,12 @@ public class MessageBase {
 		this.msgType = msgType;
 	}
 
-	
+	@Override
+	public void selfToString() {
+		// TODO Auto-generated method stub
+		super.selfToString();
+		System.out.println("消息基类");
+	}
 	
 	
 

@@ -15,6 +15,4 @@ public  class MsgTypeEnum {
 	public static final String MsgType_Location="location";
 	
 	public static final String MsgType_Link="link";
-	
-
 }

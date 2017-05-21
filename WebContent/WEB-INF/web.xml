@@ -18,15 +18,15 @@
     <url-pattern>/wx</url-pattern>
   </servlet-mapping>
   <filter>
-  	<filter-name>CharEncoding</filter-name>
-  	<filter-class>com.wechat.global.filter.CharEncodingFilter</filter-class>
-  	<init-param>
-  		<param-name>encoding</param-name>
-  		<param-value>UTF-8</param-value>
-  	</init-param>
+    <filter-name>CharEncoding</filter-name>
+    <filter-class>com.wechat.global.filter.CharEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
   </filter>
   <filter-mapping>
-  	<filter-name>CharEncoding</filter-name>
-  	<url-pattern>/*</url-pattern>
+    <filter-name>CharEncoding</filter-name>
+    <url-pattern>/*</url-pattern>
   </filter-mapping>
 </web-app>

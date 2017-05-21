@@ -49,13 +49,6 @@ public class MessageUtil {
 		return xmlMap;
 	}
 	
-/*	public  static void main(String[] args){
-		MessageText mstMessageText=new MessageText();
-		String nameString=
-		System.out.println(nameString);
-		
-	}*/
-	
 	/**
 	 * 将消息对象转化为xml
 	 * @param 消息对象
