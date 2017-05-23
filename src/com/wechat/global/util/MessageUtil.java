@@ -2,6 +2,7 @@ package com.wechat.global.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Writer;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
@@ -16,8 +17,15 @@ import org.dom4j.io.SAXReader;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.core.util.QuickWriter;  
+import com.thoughtworks.xstream.io.HierarchicalStreamWriter;  
+import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;  
+import com.thoughtworks.xstream.io.xml.XppDriver; 
 
-
+/**
+ * 
+ * 消息处理类
+ * */
 public class MessageUtil {
 
 	/**
@@ -35,15 +43,12 @@ public class MessageUtil {
 			Document document=saxReader.read(ins);
 			Element rootElement=document.getRootElement();
 			List<Element> list=rootElement.elements();
-			//System.out.println("2");
 			for (Element e : list) {
-				//System.out.println(e.getName());
 				xmlMap.put(e.getName(), e.getText());
 			}
 			ins.close();
-			
+			ins = null;
 		} catch (DocumentException e) {
-			// TODO: handle exception
 			System.out.println(e.getMessage());
 		}
 		return xmlMap;
@@ -79,15 +84,38 @@ public class MessageUtil {
 			}
 		return xStream.toXML(object);
 	}
+	/** 
+     * 扩展xstream，使其支持CDATA块 
+     *  
+     * @date 2013-05-19 
+     */  
+    private static XStream xstream = new XStream(new XppDriver() {  
+        public HierarchicalStreamWriter createWriter(Writer out) {  
+            return new PrettyPrintWriter(out) {  
+                // 对所有xml节点的转换都增加CDATA标记  
+                boolean cdata = true;  
+                public void startNode(String name, Class clazz) {  
+                    super.startNode(name, clazz);  
+                }  
+                protected void writeText(QuickWriter writer, String text) {  
+                    if (cdata) {  
+                        writer.write("<![CDATA[");  
+                        writer.write(text);  
+                        writer.write("]]>");  
+                    } else {  
+                        writer.write(text);  
+                    }  
+                }  
+            };  
+        }  
+    }); 
+	
 	/**
 	 * 消息初始化
 	 * @param 消息对象
 	 * 
 	 * */
 	public static String init(Object object){
-		
-		
-		
 		return "su";
 	}
 	public boolean checkType(Object object){

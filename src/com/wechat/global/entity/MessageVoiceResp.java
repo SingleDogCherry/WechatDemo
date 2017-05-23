@@ -35,7 +35,4 @@ public class MessageVoiceResp extends MessageBase {
 	public void setRecognition(String recognition) {
 		this.recognition = recognition;
 	}
-	
-	
-
 }

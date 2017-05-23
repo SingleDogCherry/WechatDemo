@@ -24,8 +24,8 @@ import com.wechat.global.util.TokenUtil;
 /**
  * Servlet implementation class WechatTokenServlet
  * 
- * @author rjrcu_rzx
- * @Email 421347251@qq.com
+ * @author zjrcu_rzx
+ * @Email 9740681041@qq.com
  * @see 核心请求处理 微信token处理类
  * 
  * 
@@ -33,6 +33,15 @@ import com.wechat.global.util.TokenUtil;
 @WebServlet("/WechatTokenServlet")
 public class WechatTokenServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private Map<String, String> returnMap;
+	/*** 微信加密签名 */
+	private String signature;
+	/** 时间戳 */
+	private String timestamp;
+	/** 随机数 */
+	private String nonce;
+	/** 随机字符串 */
+	private String echostr;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -49,21 +58,30 @@ public class WechatTokenServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		// 微信加密签名
-		String signature = request.getParameter("signature");
-		// 时间戳
-		String timestamp = request.getParameter("timestamp");
-		// 随机数
-		String nonce = request.getParameter("nonce");
-		// 随机字符串
-		String echostr = request.getParameter("echostr");
+		try {
+			returnMap=MessageUtil.xmlToMap(request);
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		echostr=request.getParameter("echostr");
+		signature=request.getParameter("signature");
+		timestamp=request.getParameter("timestamp");
+		nonce=request.getParameter("nonce");
+		
 		PrintWriter out = response.getWriter();
+		System.out.println("随机字符串" + echostr);
+		System.out.println("微信加密签名" + signature);
+		System.out.println("时间戳" + timestamp);
+		System.out.println("随机数" + nonce);
 		if (TokenUtil.validateSignature(signature, timestamp, nonce)) {
 			out.println(echostr);
-			// System.out.println("yes");
 		}
+		else {
+			out.print("验证失败");
+		}
+		
 		out.close();
-		out = null;
 	}
 
 	/**
@@ -72,21 +90,15 @@ public class WechatTokenServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
-		// request.setCharacterEncoding("UTF-8");
-		// response.setCharacterEncoding("UTF-8");
-		// TODO 消息的接受、处理、响应
 		PrintWriter out = response.getWriter();
 		String xmlstring = "";
-		Map<String, String> returnMap = new HashMap<String, String>();
-
+		returnMap = new HashMap<String, String>();
 		try {
 			returnMap = MessageUtil.xmlToMap(request);
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		String toUserName = returnMap.get("FromUserName");
 		String fromUserName = returnMap.get("ToUserName");// 发送消息的人和接收消息的人是一个人，所以要相反赋值
 		String msgType = returnMap.get("MsgType");
@@ -103,17 +115,17 @@ public class WechatTokenServlet extends HttpServlet {
 		messageBase.setCreateTime(new Date().getTime());
 
 		if (MsgTypeEnum.MsgType_Text.equals(msgType)) {
-			
+
 			MessageText mst = new MessageText();
-		
-			 mst.setToUserName(toUserName);
-			 mst.setFromUserName(fromUserName);
-			 mst.setCreateTime(new Date().getTime());
-			 mst.setMsgType(msgType);
-			 mst.setMsgType(msgType);
-			 mst.setContent(content);
-			 mst.setMsgId(msgId);
-			 System.out.println("print mst  "+mst.toString());
+
+			mst.setToUserName(toUserName);
+			mst.setFromUserName(fromUserName);
+			mst.setCreateTime(new Date().getTime());
+			mst.setMsgType(msgType);
+			mst.setMsgType(msgType);
+			mst.setContent(content);
+			mst.setMsgId(msgId);
+			// System.out.println("print mst  "+mst.toString());
 			xmlstring = MessageUtil.beanToXml(mst);
 			System.out.println(xmlstring);
 		} else if (MsgTypeEnum.MsgType_Image.equals(msgType)) {
@@ -123,5 +135,45 @@ public class WechatTokenServlet extends HttpServlet {
 
 		out.println(xmlstring);
 		out.close();
+	}
+
+	public Map<String, String> getReturnMap() {
+		return returnMap;
+	}
+
+	public void setReturnMap(Map<String, String> returnMap) {
+		this.returnMap = returnMap;
+	}
+
+	public String getSignature() {
+		return signature;
+	}
+
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
+
+	public String getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(String timestamp) {
+		this.timestamp = timestamp;
+	}
+
+	public String getNonce() {
+		return nonce;
+	}
+
+	public void setNonce(String nonce) {
+		this.nonce = nonce;
+	}
+
+	public String getEchostr() {
+		return echostr;
+	}
+
+	public void setEchostr(String echostr) {
+		this.echostr = echostr;
 	}
 }

@@ -31,89 +31,109 @@ public class DataBaseUtil {
 	 * */
 	private String driver;
 
-	public static void main(String args[]) throws SQLException, IOException, ClassNotFoundException {
+	public static void main(String args[]) throws SQLException, IOException,
+			ClassNotFoundException {
 		DataBaseUtil dBaseUtil = new DataBaseUtil();
-		
-			dBaseUtil.runTest();
-		
+
+		dBaseUtil.runTest();
 
 	}
-	public  void  runTest() throws SQLException,IOException, ClassNotFoundException{
+
+	public void runTest() throws SQLException, IOException,
+			ClassNotFoundException {
 		String sql = "select * from user";
+		String updateSql = " update user set age='15' where id=2";
 		Connection connection = null;
-		//connection = getConn();
+		// connection = getConn();
 		connection = getConn("src/resource/application.properties");
-		if (null==connection) {
+		if (null == connection) {
 			System.out.println("空的数据库连接");
 		}
 		try {
 			PreparedStatement pstmt = connection.prepareStatement(sql);
-			ResultSet rSet = pstmt.executeQuery();
-			while (rSet.next()) {
+			//ResultSet rSet = pstmt.executeQuery();
+			//ResultSet rSet 
+			//int resultInt= pstmt.executeUpdate(updateSql);
+			boolean flag=pstmt.execute();
+			System.out.println(flag);
+			if (flag) {
+				System.out.println("语句执行成功");
+				ResultSet rsResultSet = pstmt.getResultSet();
+				while (rsResultSet.next()) {
+					User user = new User();
+					user.setId(rsResultSet.getInt("id"));
+					user.setName(rsResultSet.getString("name"));
+					user.setAge(rsResultSet.getInt("age"));
+					user.setPasword(rsResultSet.getString("password"));
+					user.selfToString();
+				}
+			}
+			
+			
+			/*while (rSet.next()) {
 				User user = new User();
 				user.setId(rSet.getInt("id"));
 				user.setName(rSet.getString("name"));
 				user.setAge(rSet.getInt("age"));
 				user.selfToString();
-			}
+			}*/
 			pstmt.close();
-			rSet.close();
+			//rSet.close();
 			connection.close();
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 		}
-		
 	}
-	
-	public Connection getConn(String path) throws SQLException{
+
+	public Connection getConn(String path) throws SQLException {
 		Connection ct = null;
-		Properties properties=new Properties();
-		try (InputStream io = Files.newInputStream(Paths.get(path))){
+		Properties properties = new Properties();
+		try (InputStream io = Files.newInputStream(Paths.get(path))) {
 			properties.load(io);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		driver=properties.getProperty("jdbc.driver");
-		if (driver!=null) {
+		driver = properties.getProperty("jdbc.driver");
+		if (driver != null) {
 			System.setProperty("jdbc.driver", driver);
-		} 
-		passwd=properties.getProperty("jdbc.password");
-		uname=properties.getProperty("jdbc.username");
-		connUrl=properties.getProperty("jdbc.url");
-		System.out.println("passwd:"+passwd+";uname:"+uname+";connUrl:"+connUrl);
-		ct=DriverManager.getConnection(connUrl, uname, passwd);
-		if (ct==null) {
+		}
+		passwd = properties.getProperty("jdbc.password");
+		uname = properties.getProperty("jdbc.username");
+		connUrl = properties.getProperty("jdbc.url");
+		System.out.println("passwd:" + passwd + ";uname:" + uname + ";connUrl:"
+				+ connUrl);
+		ct = DriverManager.getConnection(connUrl, uname, passwd);
+		if (ct == null) {
 			return null;
 		}
 		return ct;
 	}
-	
-	
-	
+
 	/**
 	 * 默认的数据库连接
 	 * */
 	public Connection getConn() throws ClassNotFoundException {
 		Connection ct = null;
-		
-			uname = "root";
-			passwd = "javaee";
-			connUrl = "jdbc:mysql://localhost:3306/testDB";
-			driver="com.mysql.jdbc.Driver";
-			Class.forName(driver);
-			try {
-				ct = DriverManager.getConnection(connUrl, uname, passwd);
-				if (null == ct) {
-					System.out.println("创建数据库连接失败");
-					return  null;
-				}
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
+		uname = "root";
+		passwd = "javaee";
+		connUrl = "jdbc:mysql://localhost:3306/testDB";
+		driver = "com.mysql.jdbc.Driver";
+		Class.forName(driver);
+		try {
+			ct = DriverManager.getConnection(connUrl, uname, passwd);
+			if (null == ct) {
+				System.out.println("创建数据库连接失败");
+				return null;
 			}
-			return ct;
-			
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ct;
+
 	}
 
 	public String getUname() {
