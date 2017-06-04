@@ -110,6 +110,7 @@ public class MessageUtil {
         }  
     }); 
 	
+	
 	/**
 	 * 消息初始化
 	 * @param 消息对象
@@ -120,6 +121,14 @@ public class MessageUtil {
 	}
 	public boolean checkType(Object object){
 		return false;
+	}
+
+	public static XStream getXstream() {
+		return xstream;
+	}
+
+	public static void setXstream(XStream xstream) {
+		MessageUtil.xstream = xstream;
 	}
 	
 }
