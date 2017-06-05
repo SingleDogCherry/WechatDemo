@@ -1,26 +1,14 @@
 package com.wechat.global.servlet;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.dom4j.DocumentException;
-
-import com.wechat.global.entity.MessageImage;
-import com.wechat.global.entity.MessageText;
-import com.wechat.global.entity.base.MessageBase;
-import com.wechat.global.enums.MsgTypeEnum;
 import com.wechat.global.service.MessageService;
-import com.wechat.global.util.MessageUtil;
 import com.wechat.global.util.TokenUtil;
 
 /**

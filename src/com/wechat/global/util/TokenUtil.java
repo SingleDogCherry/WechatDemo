@@ -28,7 +28,6 @@ public class TokenUtil {
 		for (int i = 0; i < list.size(); i++) {
 			string += list.get(i);
 		}
-		//System.out.println(string);
 		String tmpStr=sha1(string);
 		return tmpStr != null ? tmpStr.equals(signature.toUpperCase()) : false;
 
