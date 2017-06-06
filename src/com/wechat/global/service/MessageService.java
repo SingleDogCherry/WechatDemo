@@ -40,12 +40,12 @@ public class MessageService {
 		String msgType = returnMap.get("MsgType");
 		// String content = returnMap.get("Content");
 		// String msgId = returnMap.get("MsgId");
-		MessageServiceInterface msi = null;
+		MessageServiceInterface msInter = null;
 		if (MsgTypeEnum.MsgType_Text.equals(msgType)) {
-			msi = new MessageTextService();
-			xmlstring = msi.execRequest(returnMap);
+			msInter = new MessageTextService();
+			xmlstring = msInter.execRequest(returnMap);
 		} else if (MsgTypeEnum.MsgType_Image.equals(msgType)) {
-			MessageImage msig = new MessageImage();
+			MessageImage msi = new MessageImage();
 			
 
 		}
