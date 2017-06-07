@@ -18,7 +18,7 @@ public class MessageTextService extends MessageService implements MessageService
 		mst.setFromUserName(returnMap.get("ToUserName"));
 		mst.setCreateTime(new Date().getTime());
 		mst.setMsgType(returnMap.get("MsgType"));
-		mst.setContent(TulingApiService.getTulingResult(returnMap.get("Content")));
+		mst.setContent(TulingApiService.getTulingResult(returnMap.get("Content"),returnMap.get("FromUserName")));
 		//mst.setContent(returnMap.get("Content"));
 		mst.setMsgId(returnMap.get("MsgId"));
 		xmlstring=(MessageUtil.beanToXml(mst));
