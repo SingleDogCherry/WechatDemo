@@ -50,13 +50,14 @@ public class WechatTokenServlet extends HttpServlet {
 		signature = request.getParameter("signature");
 		timestamp = request.getParameter("timestamp");
 		nonce = request.getParameter("nonce");
-
+		PrintWriter out = response.getWriter();
 		System.out.println("随机字符串" + echostr);
 		System.out.println("微信加密签名" + signature);
 		System.out.println("时间戳" + timestamp);
 		System.out.println("随机数" + nonce);
 		if (TokenUtil.validateSignature(signature, timestamp, nonce)) {
 			System.out.println("成功的验证");
+			out.print(echostr);
 		} else {
 			System.out.println("验证失败");
 		}
