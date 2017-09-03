@@ -3,12 +3,24 @@ package com.wechat.global.service;
 import java.util.Date;
 import java.util.Map;
 
-
 import com.wechat.global.entity.MessageText;
-import com.wechat.global.service.inter.MessageServiceInterface;
+import com.wechat.global.service.inter.EventServiceInterface;
 import com.wechat.global.util.MessageUtil;
+/***
+ *事件处理类 
+ * 
+ */
+public class EventService implements EventServiceInterface {
 
-public class MessageTextService extends MessageServiceDispatcher implements MessageServiceInterface  {
+	private String xmlstring;
+
+	public String getXmlstring() {
+		return xmlstring;
+	}
+
+	public void setXmlstring(String xmlstring) {
+		this.xmlstring = xmlstring;
+	}
 
 	@Override
 	public String execRequest(Map<String, String> returnMap) {
@@ -24,11 +36,6 @@ public class MessageTextService extends MessageServiceDispatcher implements Mess
 		xmlstring=(MessageUtil.beanToXml(mst));
 		//System.out.println(getXmlstring());
 		return xmlstring;
-		
-		
-		
-		
-		
 	}
 
 }

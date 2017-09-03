@@ -3,7 +3,7 @@ package com.wechat.global.entity;
 import com.wechat.global.entity.base.MessageBase;
 import com.wechat.global.enums.MsgTypeEnum;
 
-public class MessageShotVideo  extends MessageBase {
+public class MessageShortVideo  extends MessageBase {
 	
 	/**小视频为shortVideo*/
 	private  static final String msgType=MsgTypeEnum.MsgType_Shortvideo;

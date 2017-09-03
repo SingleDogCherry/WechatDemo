@@ -1,7 +1,6 @@
 package com.wechat.global.entity.base;
 
-
-public class MessageBase  extends ClassBase {
+public class MessageBase extends ClassBase {
 	/** 开发者微信号 */
 	private String toUserName;
 	/** 发送方帐号（一个OpenID） */
@@ -37,8 +36,6 @@ public class MessageBase  extends ClassBase {
 		this.createTime = createTime;
 	}
 
-	
-
 	public String getMsgId() {
 		return msgId;
 	}
@@ -61,7 +58,5 @@ public class MessageBase  extends ClassBase {
 		super.selfToString();
 		System.out.println("消息基类");
 	}
-	
-	
 
 }

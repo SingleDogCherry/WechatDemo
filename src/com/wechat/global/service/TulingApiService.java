@@ -1,8 +1,6 @@
 package com.wechat.global.service;
 
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -14,7 +12,6 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 /**
  * 图灵API服务
@@ -95,13 +92,13 @@ public class TulingApiService {
 				//String tmpList = json.getString("list");
 				System.out.println("---------url---------------");
 				String url = null;
-				JSONArray jArray = json.getJSONArray("url");
+				JSONArray jArray = json.getJSONArray("list");
 				for (int i = 0; i < jArray.length(); i++) {
 					String urlString = jArray.getString(i);
 					System.out.println("------"+urlString);
 					url=url+"\n"+urlString;
 				}
-				
+				//TODO  这段对新闻列表的处理逻辑需要改进
 				result = json.getString("text") + "\n"
 						+ url + "\n" + json.getString("article");
 				

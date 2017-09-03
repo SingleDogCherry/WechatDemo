@@ -10,6 +10,8 @@ public class MessageLink extends MessageBase {
 	private String title;
 	/**消息描述*/
 	private String description;
+	/**消息链接*/
+	private String url;
 	public String getTitle() {
 		return title;
 	}
@@ -25,13 +27,13 @@ public class MessageLink extends MessageBase {
 	public String getUrl() {
 		return url;
 	}
+
 	public void setUrl(String url) {
 		this.url = url;
 	}
 	public static String getMsgtype() {
 		return msgType;
 	}
-	/**消息链接*/
-	private String url;
+	
 
 }

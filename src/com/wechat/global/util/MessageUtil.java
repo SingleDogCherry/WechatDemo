@@ -17,10 +17,10 @@ import org.dom4j.io.SAXReader;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import com.thoughtworks.xstream.core.util.QuickWriter;  
-import com.thoughtworks.xstream.io.HierarchicalStreamWriter;  
-import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;  
-import com.thoughtworks.xstream.io.xml.XppDriver; 
+import com.thoughtworks.xstream.core.util.QuickWriter;
+import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
+import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
+import com.thoughtworks.xstream.io.xml.XppDriver;
 
 /**
  * 
@@ -30,19 +30,21 @@ public class MessageUtil {
 
 	/**
 	 * 将xml格式转换为map
+	 * 
 	 * @param request
-	 * @return 
+	 * @return
 	 * @throws IOException
 	 */
 	@SuppressWarnings("unchecked")
-	public static Map<String , String > xmlToMap(HttpServletRequest request) throws IOException,DocumentException{
-		Map<String, String > xmlMap = new HashMap<String, String>();
-		SAXReader  saxReader=new SAXReader();
+	public static Map<String, String> xmlToMap(HttpServletRequest request)
+			throws IOException, DocumentException {
+		Map<String, String> xmlMap = new HashMap<String, String>();
+		SAXReader saxReader = new SAXReader();
 		try {
-			InputStream ins=request.getInputStream();
-			Document document=saxReader.read(ins);
-			Element rootElement=document.getRootElement();
-			List<Element> list=rootElement.elements();
+			InputStream ins = request.getInputStream();
+			Document document = saxReader.read(ins);
+			Element rootElement = document.getRootElement();
+			List<Element> list = rootElement.elements();
 			for (Element e : list) {
 				xmlMap.put(e.getName(), e.getText());
 			}
@@ -53,73 +55,81 @@ public class MessageUtil {
 		}
 		return xmlMap;
 	}
-	
+
 	/**
 	 * 将消息对象转化为xml
+	 * 
 	 * @param 消息对象
 	 * @return xmlString
 	 * 
 	 */
-	public static String  beanToXml(Object object){
-			
-			XStream xStream=new XStream(new DomDriver("utf-8"));
-			xStream.alias("xml", object.getClass());
-			Class<?> tmpClass=object.getClass();
-			Field[] fields=tmpClass.getDeclaredFields();
-			for (Field field : fields) {
+	public static String beanToXml(Object object) {
+
+		XStream xStream = new XStream(new DomDriver("utf-8"));
+		xStream.alias("xml", object.getClass());
+		Class<?> tmpClass = object.getClass();
+		Field[] fields = tmpClass.getDeclaredFields();
+		for (Field field : fields) {
+			field.setAccessible(true);
+			String filedString = field.getName();
+			String upString = filedString.substring(0, 1).toUpperCase()
+					+ filedString.substring(1);
+			xStream.aliasField(upString, object.getClass(), filedString);
+		}
+		if (tmpClass.getSuperclass() != null) {
+			Class<?> superClass = tmpClass.getSuperclass();
+			Field[] fields2 = superClass.getDeclaredFields();
+			for (Field field : fields2) {
 				field.setAccessible(true);
-				String filedString=field.getName();
-				String upString=filedString.substring(0,1).toUpperCase()+filedString.substring(1);
+				String filedString = field.getName();
+				String upString = filedString.substring(0, 1).toUpperCase()
+						+ filedString.substring(1);
 				xStream.aliasField(upString, object.getClass(), filedString);
 			}
-			if (tmpClass.getSuperclass()!=null) {
-				Class< ?> superClass=tmpClass.getSuperclass();
-				Field[] fields2=superClass.getDeclaredFields();
-				for (Field field : fields2) {
-					field.setAccessible(true);
-					String filedString=field.getName();
-					String upString=filedString.substring(0,1).toUpperCase()+filedString.substring(1);
-					xStream.aliasField(upString, object.getClass(), filedString);
-				}
-			}
+		}
 		return xStream.toXML(object);
 	}
-	/** 
-     * 扩展xstream，使其支持CDATA块 
-     *  
-     * @date 2013-05-19 
-     */  
-    private static XStream xstream = new XStream(new XppDriver() {  
-        public HierarchicalStreamWriter createWriter(Writer out) {  
-            return new PrettyPrintWriter(out) {  
-                // 对所有xml节点的转换都增加CDATA标记  
-                boolean cdata = true;  
-                public void startNode(String name, Class clazz) {  
-                    super.startNode(name, clazz);  
-                }  
-                protected void writeText(QuickWriter writer, String text) {  
-                    if (cdata) {  
-                        writer.write("<![CDATA[");  
-                        writer.write(text);  
-                        writer.write("]]>");  
-                    } else {  
-                        writer.write(text);  
-                    }  
-                }  
-            };  
-        }  
-    }); 
-	
-	
+
+	/**
+	 * 扩展xstream，使其支持CDATA块
+	 * 
+	 * @date 2017-08-22
+	 */
+	private static XStream xstream = new XStream(new XppDriver() {
+		public HierarchicalStreamWriter createWriter(Writer out) {
+			return new PrettyPrintWriter(out) {
+				// 对所有xml节点的转换都增加CDATA标记
+				boolean cdata = true;
+
+				@SuppressWarnings("rawtypes")
+				public void startNode(String name, Class clazz) {
+					super.startNode(name, clazz);
+				}
+
+				protected void writeText(QuickWriter writer, String text) {
+					if (cdata) {
+						writer.write("<![CDATA[");
+						writer.write(text);
+						writer.write("]]>");
+					} else {
+						writer.write(text);
+					}
+				}
+			};
+		}
+	});
+
 	/**
 	 * 消息初始化
+	 * 
 	 * @param 消息对象
 	 * 
 	 * */
-	public static String init(Object object){
+	public static String init(Object object) {
 		return "su";
 	}
-	public boolean checkType(Object object){
+
+	public boolean checkType(Object object) {
 		return false;
 	}
 
@@ -130,5 +140,5 @@ public class MessageUtil {
 	public static void setXstream(XStream xstream) {
 		MessageUtil.xstream = xstream;
 	}
-	
+
 }

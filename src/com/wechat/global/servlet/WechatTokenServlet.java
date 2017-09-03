@@ -2,13 +2,19 @@ package com.wechat.global.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.wechat.global.service.MessageService;
+import org.dom4j.DocumentException;
+
+import com.wechat.global.enums.MsgTypeEnum;
+import com.wechat.global.service.EventServiceDispatcher;
+import com.wechat.global.service.MessageServiceDispatcher;
+import com.wechat.global.util.MessageUtil;
 import com.wechat.global.util.TokenUtil;
 
 /**
@@ -61,7 +67,6 @@ public class WechatTokenServlet extends HttpServlet {
 		} else {
 			System.out.println("验证失败");
 		}
-
 	}
 
 	/**
@@ -70,8 +75,18 @@ public class WechatTokenServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// doGet(request, response);
-		String xmlString = MessageService.processRequest(request);
+		String msgType = null ,xmlString;
+		try {
+			msgType = MessageUtil.xmlToMap(request).get("MsgType");
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (MsgTypeEnum.MsgType_Event.equals(msgType)) {
+			xmlString = EventServiceDispatcher.processRequest(request);//进入事件处理
+		} else {
+			xmlString = MessageServiceDispatcher.processRequest(request);//进入消息处理
+		}
 		PrintWriter out = response.getWriter();
 		out.print(xmlString);
 		out.close();

@@ -7,7 +7,7 @@ import java.util.Map;
  * 消息处理接口
  * 
  */
-public interface MessageServiceInterface {
+public interface MessageServiceInterface  extends BaseInterface {
 	/**
 	 * 消息请求处理方法
 	 * */
