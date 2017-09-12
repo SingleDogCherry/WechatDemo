@@ -2,7 +2,10 @@ package com.wechat.global.entity;
 
 import com.wechat.global.entity.base.MessageBase;
 import com.wechat.global.enums.MsgTypeEnum;
-
+/***
+ * 小视频消息实体
+ * 
+ * */
 public class MessageShortVideo  extends MessageBase {
 	
 	/**小视频为shortVideo*/

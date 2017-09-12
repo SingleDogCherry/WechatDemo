@@ -12,7 +12,9 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import com.wechat.global.entity.User;
-
+/**
+ * 数据库方法类
+ * */
 public class DataBaseUtil {
 	/**
 	 * 数据库名
@@ -42,6 +44,7 @@ public class DataBaseUtil {
 	public void runTest() throws SQLException, IOException,
 			ClassNotFoundException {
 		String sql = "select * from user";
+		@SuppressWarnings("unused")
 		String updateSql = " update user set age='15' where id=2";
 		Connection connection = null;
 		// connection = getConn();
@@ -65,7 +68,7 @@ public class DataBaseUtil {
 					user.setName(rsResultSet.getString("name"));
 					user.setAge(rsResultSet.getInt("age"));
 					user.setPasword(rsResultSet.getString("password"));
-					user.selfToString();
+					user.toString();
 				}
 			}
 			

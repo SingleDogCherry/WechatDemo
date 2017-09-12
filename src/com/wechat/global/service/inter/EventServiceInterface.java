@@ -1,11 +1,15 @@
 package com.wechat.global.service.inter;
 
 import java.util.Map;
-
+/**
+ * 事件处理接口
+ * */
 public interface EventServiceInterface extends BaseInterface{
+
 	/**
-	 * 事件处理接口
+	 * @param  请求map
+	 * @return 返回处理字符串
 	 * */
-	 String execRequest(Map<String, String> returnMap) ;
+	 String execRequestMap(Map<String, String> requestMap) ;
 
 }

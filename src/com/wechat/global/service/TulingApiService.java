@@ -82,33 +82,32 @@ public class TulingApiService {
 
 		try {
 			JSONObject json = new JSONObject(result);
-			System.out.println("--------------"+json.get("code"));
+			System.out.println("--------------" + json.get("code"));
 			// 以code=100000为例，参考图灵机器人api文档
 			if (TUCode_TEXT == json.getInt("code")) {
 				result = json.getString("text");
 			} else if (TUCode_URL == json.getInt("code")) {
-				result = json.getString("text")  + "\n"+ json.getString("url");
+				result = json.getString("text") + "\n" + json.getString("url");
 			} else if (TUCode_NEWS == json.getInt("code")) {
-				//String tmpList = json.getString("list");
-				System.out.println("---------url---------------");
-				String url = null;
+				result = "";
 				JSONArray jArray = json.getJSONArray("list");
 				for (int i = 0; i < jArray.length(); i++) {
-					String urlString = jArray.getString(i);
-					System.out.println("------"+urlString);
-					url=url+"\n"+urlString;
+					JSONObject tJsonObject = jArray.getJSONObject(i);
+					if (i>2) {
+						break;
+					}
+					result = result  +"\n" + ";标题: " + tJsonObject.getString("article")
+							+ ";地址: " + tJsonObject.getString("detailurl");
 				}
-				//TODO  这段对新闻列表的处理逻辑需要改进
-				result = json.getString("text") + "\n"
-						+ url + "\n" + json.getString("article");
-				
+				// TODO 这段对新闻列表的处理逻辑需要改进
+				result = json.getString("text") + result;
+
 			} else if (TUCode_COOKBOOK == json.getInt("code")) {
 				result = json.getString("text") + "//\n"
 						+ json.getString("url");
 			} else if (TUCode_SONG == json.getInt("code")) {
 				result = json.getString("text") + json.getString("url");
-			}
-			else if (TUCode_POEM == json.getInt("code")) {
+			} else if (TUCode_POEM == json.getInt("code")) {
 				result = json.getString("text") + json.getString("url");
 			}
 

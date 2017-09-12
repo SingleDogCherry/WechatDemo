@@ -1,5 +1,8 @@
 package com.wechat.global.enums;
 
+/**
+ * 事件类型枚举
+ * */
 public class EventTypeEnum {
 	/** 请求消息推送*/
 	public static final String REQ_MESSAGE_TYPE_EVENT = "event";

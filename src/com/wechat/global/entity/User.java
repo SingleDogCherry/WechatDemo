@@ -3,7 +3,10 @@ package com.wechat.global.entity;
 import java.util.Date;
 
 import com.wechat.global.entity.base.ClassBase;
-
+/**
+ * 用户实体
+ * 
+ * */
 public class User extends ClassBase{
 	/**
 	 * 用户id
@@ -66,10 +69,12 @@ public class User extends ClassBase{
 		this.age = age;
 	}
 	 @Override
-	public void selfToString() {
+	public String  toString() {
 		// TODO Auto-generated method stub
-		super.selfToString();
+		super.toString();
 		System.out.println("用户表:用户id"+this.id+"用户名"+this.name+"用户密码"+this.pasword);
-	}
+		return "用户表:用户id"+this.id+"用户名"+this.name+"用户密码"+this.pasword;
+	
+	 }
 
 }

@@ -16,7 +16,6 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.core.util.QuickWriter;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
@@ -65,8 +64,8 @@ public class MessageUtil {
 	 */
 	public static String beanToXml(Object object) {
 
-		XStream xStream = new XStream(new DomDriver("utf-8"));
-		xStream.alias("xml", object.getClass());
+		//XStream xStream = new XStream(new DomDriver("utf-8"));
+		xstream.alias("xml", object.getClass());
 		Class<?> tmpClass = object.getClass();
 		Field[] fields = tmpClass.getDeclaredFields();
 		for (Field field : fields) {
@@ -74,7 +73,7 @@ public class MessageUtil {
 			String filedString = field.getName();
 			String upString = filedString.substring(0, 1).toUpperCase()
 					+ filedString.substring(1);
-			xStream.aliasField(upString, object.getClass(), filedString);
+			xstream.aliasField(upString, object.getClass(), filedString);
 		}
 		if (tmpClass.getSuperclass() != null) {
 			Class<?> superClass = tmpClass.getSuperclass();
@@ -84,10 +83,10 @@ public class MessageUtil {
 				String filedString = field.getName();
 				String upString = filedString.substring(0, 1).toUpperCase()
 						+ filedString.substring(1);
-				xStream.aliasField(upString, object.getClass(), filedString);
+				xstream.aliasField(upString, object.getClass(), filedString);
 			}
 		}
-		return xStream.toXML(object);
+		return xstream.toXML(object);
 	}
 
 	/**

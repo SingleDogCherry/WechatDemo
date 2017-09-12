@@ -5,7 +5,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-
+/**
+ * 验证方法类
+ * 
+ * */
 public class TokenUtil {
 	private final static String token = "mySingleDogHome";
 

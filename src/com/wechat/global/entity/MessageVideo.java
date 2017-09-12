@@ -2,7 +2,10 @@ package com.wechat.global.entity;
 
 import com.wechat.global.entity.base.MessageBase;
 import com.wechat.global.enums.MsgTypeEnum;
-
+/**
+ * 视频消息实体
+ * 
+ * */
 public class MessageVideo extends MessageBase {
 	/**视频消息媒体id*/
 	private String MediaId;

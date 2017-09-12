@@ -1,5 +1,8 @@
 package com.wechat.global.entity.base;
-
+/**
+ * 消息基类
+ * 
+ * */
 public class MessageBase extends ClassBase {
 	/** 开发者微信号 */
 	private String toUserName;
@@ -53,10 +56,11 @@ public class MessageBase extends ClassBase {
 	}
 
 	@Override
-	public void selfToString() {
+	public String toString() {
 		// TODO Auto-generated method stub
-		super.selfToString();
+		super.toString();
 		System.out.println("消息基类");
+		return "消息基类";
 	}
 
 }

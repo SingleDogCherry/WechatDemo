@@ -23,16 +23,16 @@ public class EventService implements EventServiceInterface {
 	}
 
 	@Override
-	public String execRequest(Map<String, String> returnMap) {
+	public String execRequestMap(Map<String, String> requestMap) {
 		MessageText mst = new MessageText();
 
-		mst.setToUserName(returnMap.get("FromUserName"));// 发送消息的人和接收消息的人是一个人，所以要相反赋值
-		mst.setFromUserName(returnMap.get("ToUserName"));
+		mst.setToUserName(requestMap.get("FromUserName"));// 发送消息的人和接收消息的人是一个人，所以要相反赋值
+		mst.setFromUserName(requestMap.get("ToUserName"));
 		mst.setCreateTime(new Date().getTime());
-		mst.setMsgType(returnMap.get("MsgType"));
-		mst.setContent(TulingApiService.getTulingResult(returnMap.get("Content"),returnMap.get("FromUserName")));
-		//mst.setContent(returnMap.get("Content"));
-		mst.setMsgId(returnMap.get("MsgId"));
+		mst.setMsgType(requestMap.get("MsgType"));
+		mst.setContent(TulingApiService.getTulingResult(requestMap.get("Content"),requestMap.get("FromUserName")));
+		//mst.setContent(requestMap.get("Content"));
+		mst.setMsgId(requestMap.get("MsgId"));
 		xmlstring=(MessageUtil.beanToXml(mst));
 		//System.out.println(getXmlstring());
 		return xmlstring;

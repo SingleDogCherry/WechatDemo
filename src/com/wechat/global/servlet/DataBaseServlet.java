@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * 数据库连接
  * Servlet implementation class DataBaseServlet
  */
 @WebServlet("/DataBaseServlet")

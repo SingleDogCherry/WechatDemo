@@ -2,7 +2,10 @@ package com.wechat.global.entity;
 
 import com.wechat.global.entity.base.MessageBase;
 import com.wechat.global.enums.MsgTypeEnum;
-
+/**
+ * 声音消息实体
+ * 
+ * */
 public class MessageVoice extends MessageBase {
 	/** voice */
 	private static final String MsgType = MsgTypeEnum.MsgType_Voice;

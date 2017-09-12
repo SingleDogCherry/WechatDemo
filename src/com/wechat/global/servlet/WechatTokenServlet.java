@@ -2,6 +2,8 @@ package com.wechat.global.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.dom4j.DocumentException;
 
 import com.wechat.global.enums.MsgTypeEnum;
-import com.wechat.global.service.EventServiceDispatcher;
-import com.wechat.global.service.MessageServiceDispatcher;
+import com.wechat.global.service.Dispatcher.EventServiceDispatcher;
+import com.wechat.global.service.Dispatcher.MessageServiceDispatcher;
 import com.wechat.global.util.MessageUtil;
 import com.wechat.global.util.TokenUtil;
 
@@ -75,17 +77,22 @@ public class WechatTokenServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String msgType = null ,xmlString;
+		String msgType = null ,xmlString=null;
+		Map<String, String> returnMap=new HashMap<String, String>();
 		try {
-			msgType = MessageUtil.xmlToMap(request).get("MsgType");
+			returnMap=MessageUtil.xmlToMap(request);
+			msgType = returnMap.get("MsgType");
+			if (MsgTypeEnum.MsgType_Event.equals(msgType)) {
+				xmlString = EventServiceDispatcher.processRequestMap(returnMap);//进入事件处理
+			} else {
+				xmlString = MessageServiceDispatcher.processRequestMap(returnMap);//进入消息处理
+			}
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (MsgTypeEnum.MsgType_Event.equals(msgType)) {
-			xmlString = EventServiceDispatcher.processRequest(request);//进入事件处理
-		} else {
-			xmlString = MessageServiceDispatcher.processRequest(request);//进入消息处理
+		if (null==xmlString) {
+			xmlString="";
 		}
 		PrintWriter out = response.getWriter();
 		out.print(xmlString);

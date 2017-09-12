@@ -2,10 +2,11 @@ package com.wechat.global.entity;
 
 import com.wechat.global.entity.base.MessageBase;
 import com.wechat.global.enums.MsgTypeEnum;
-
+/**
+ * 链接消息实体
+ * 
+ * */
 public class MessageLink extends MessageBase {
-	/**消息类型，link*/
-	private static final String msgType=MsgTypeEnum.MsgType_Link;
 	/**消息标题*/
 	private String title;
 	/**消息描述*/
@@ -31,9 +32,9 @@ public class MessageLink extends MessageBase {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public static String getMsgtype() {
-		return msgType;
+	@Override
+	public void setMsgType(String msgType){
+		super.setMsgType(MsgTypeEnum.MsgType_Link);
 	}
-	
 
 }

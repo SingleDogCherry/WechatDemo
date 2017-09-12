@@ -11,5 +11,5 @@ public interface MessageServiceInterface  extends BaseInterface {
 	/**
 	 * 消息请求处理方法
 	 * */
-	  String execRequest(Map<String, String> returnMap) ;
+	  String execRequest(Map<String, String> requestMap) ;
 }

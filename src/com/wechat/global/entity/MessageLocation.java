@@ -2,7 +2,10 @@ package com.wechat.global.entity;
 
 import com.wechat.global.entity.base.MessageBase;
 import com.wechat.global.enums.MsgTypeEnum;
-
+/**
+ * 地理位置实体
+ * 
+ * */
 public class MessageLocation extends MessageBase {
 	/** 地理位置为location */
 	private static final String msgType = MsgTypeEnum.MsgType_Location;
@@ -49,6 +52,10 @@ public class MessageLocation extends MessageBase {
 
 	public static String getMsgtype() {
 		return msgType;
+	}
+	@Override
+	public void setMsgType(String msgType){
+		super.setMsgType(MsgTypeEnum.MsgType_Location);
 	}
 
 }
