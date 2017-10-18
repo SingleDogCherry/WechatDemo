@@ -19,7 +19,7 @@ public class MessageServiceDispatcher {
 	public static String processRequestMap(Map<String, String> requestMap)
 			throws IOException {
 
-		// 发送消息的人和接收消息的人是一个人，所以要相反赋值
+		//获取消息类型，进行分发处理
 		String msgType = requestMap.get("MsgType");
 		MessageServiceInterface msInter = null;
 		if (MsgTypeEnum.MsgType_Text.equals(msgType)) {

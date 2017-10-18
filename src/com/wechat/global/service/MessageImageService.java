@@ -1,6 +1,8 @@
 package com.wechat.global.service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import com.wechat.global.entity.MessageNewsResp;
@@ -12,7 +14,6 @@ public class MessageImageService implements MessageServiceInterface {
 
 	@Override
 	public String execRequest(Map<String, String> requestMap) {
-		// TODO Auto-generated method stub
 		
 		MessageNewsResp msnp = new MessageNewsResp();
 	//	MessageImage msi = new MessageImage();
@@ -24,12 +25,15 @@ public class MessageImageService implements MessageServiceInterface {
 		
 		News news = new News();
 		news.setArticle("测试图片消息回复");
+		news.setDescription("图片描述");
+		news.setDetailUrl("http://res.cuiyongzhi.com/2016/03/201603086749_6850.png");
+		news.setSource("cherryxing");
+		List< News>  articleList = new ArrayList<News>();
 		
-		//以下是
-		
-		
-		
-		
+		articleList.add(news);
+		msnp.setArticleCount(articleList.size());
+		msnp.setArticles(articleList);
+		//TODO:图片消息不能回复图片，还有问题待修改
 		return MessageUtil.beanToXml(msnp);
 
 		
