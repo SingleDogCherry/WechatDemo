@@ -4,9 +4,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.wechat.global.enums.MsgTypeEnum;
 import com.wechat.global.service.EventService;
 import com.wechat.global.service.inter.EventServiceInterface;
+import com.wechat.global.servlet.WechatTokenServlet;
 /**
  * 事件处理分发类
  * 
@@ -14,7 +18,7 @@ import com.wechat.global.service.inter.EventServiceInterface;
 public class EventServiceDispatcher {
 	private static Map<String, String> returnMap = new HashMap<String, String>();
 	protected static String xmlstring;
-
+	static Logger logger = LogManager.getLogger(EventServiceDispatcher.class.getName());
 	public static String processRequestMap(Map<String, String> returnMap)
 			throws IOException {
 		//TODO:事件处理部分需要重写，逻辑错误
@@ -23,8 +27,8 @@ public class EventServiceDispatcher {
 			EventServiceInterface esInter = new EventService();
 			xmlstring = esInter.execRequestMap(returnMap);
 		} else {
-			System.out.println("错误的请求信息");
-
+			logger.info("错误的请求信息");
+			
 		}
 
 		return xmlstring;

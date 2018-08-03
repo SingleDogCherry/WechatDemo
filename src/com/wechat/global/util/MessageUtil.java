@@ -10,6 +10,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -20,12 +22,14 @@ import com.thoughtworks.xstream.core.util.QuickWriter;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 import com.thoughtworks.xstream.io.xml.XppDriver;
+import com.wechat.global.servlet.WechatTokenServlet;
 
 /**
  * 
  * 消息处理类
  * */
 public class MessageUtil {
+	static Logger logger = LogManager.getLogger(MessageUtil.class.getName());
 
 	/**
 	 * 将xml格式转换为map
@@ -50,7 +54,7 @@ public class MessageUtil {
 			ins.close();
 			ins = null;
 		} catch (DocumentException e) {
-			System.out.println(e.getMessage());
+			logger.info(e.getMessage());
 		}
 		return xmlMap;
 	}

@@ -34,7 +34,6 @@ public class EventService implements EventServiceInterface {
 		//mst.setContent(requestMap.get("Content"));
 		mst.setMsgId(requestMap.get("MsgId"));
 		xmlstring=(MessageUtil.beanToXml(mst));
-		//System.out.println(getXmlstring());
 		return xmlstring;
 	}
 

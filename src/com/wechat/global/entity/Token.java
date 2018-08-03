@@ -9,7 +9,7 @@ import com.wechat.global.entity.base.ClassBase;
 public class Token extends ClassBase {
 	// 接口访问凭证
 	private String accessToken;
-	// 凭证有效期  单位：秒
+	// 凭证有效期  单位  秒
 	private int expiresIn;
 	public String getAccessToken() {
 		return accessToken;

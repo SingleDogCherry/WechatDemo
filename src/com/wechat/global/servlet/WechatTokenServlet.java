@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.dom4j.DocumentException;
 
 import com.wechat.global.enums.MsgTypeEnum;
@@ -31,6 +33,7 @@ import com.wechat.global.util.TokenUtil;
 @WebServlet("/WechatTokenServlet")
 public class WechatTokenServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	static Logger logger = LogManager.getLogger(WechatTokenServlet.class.getName());
 	/*** 微信加密签名 */
 	private String signature;
 	/** 时间戳 */
@@ -59,15 +62,15 @@ public class WechatTokenServlet extends HttpServlet {
 		timestamp = request.getParameter("timestamp");
 		nonce = request.getParameter("nonce");
 		PrintWriter out = response.getWriter();
-		System.out.println("随机字符串" + echostr);
-		System.out.println("微信加密签名" + signature);
-		System.out.println("时间戳" + timestamp);
-		System.out.println("随机数" + nonce);
+		logger.info("随机字符串" + echostr);
+		logger.info("微信加密签名" + signature);
+		logger.info("时间戳" + timestamp);
+		logger.info("随机数" + nonce);
 		if (TokenUtil.validateSignature(signature, timestamp, nonce)) {
-			System.out.println("成功的验证");
+			logger.info("成功的验证");
 			out.print(echostr);
 		} else {
-			System.out.println("验证失败");
+			logger.info("验证失败");
 		}
 	}
 

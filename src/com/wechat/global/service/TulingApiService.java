@@ -9,9 +9,13 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.wechat.global.servlet.WechatTokenServlet;
 
 /**
  * 图灵API服务
@@ -46,15 +50,16 @@ public class TulingApiService {
 	 * 诗歌类
 	 * */
 	public static final int TUCode_POEM = 314000;
-
+	static Logger logger = LogManager.getLogger(TulingApiService.class.getName());
 	public static String getTulingResult(String content, String userId) {
+		//TODO  需要将url地址抽出来到配置文件当中
 		String result = "";
 		String apiUrl = "http://www.tuling123.com/openapi/api?key=ccd7218bc415492b9cd5283c9a9be117&info=";
 		String param = "";
 		try {
 			param = apiUrl + URLEncoder.encode(content, "utf-8") + "&userid="
 					+ URLEncoder.encode(userId, "utf-8");
-			System.out.println("--------------userid--------------------"
+			logger.info("--------------userid--------------------"
 					+ userId);
 		} catch (UnsupportedEncodingException e1) {
 			// TODO Auto-generated catch block
@@ -77,6 +82,7 @@ public class TulingApiService {
 		}
 		/** 请求失败处理 */
 		if (null == result) {
+			logger.info("对不起，你说的话真是太高深了……");
 			return "对不起，你说的话真是太高深了……";
 		}
 
