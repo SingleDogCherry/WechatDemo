@@ -2,18 +2,19 @@ package com.wechat.global.entity;
 
 import com.wechat.global.entity.base.ClassBase;
 /**
- *音乐实体 
+ * 音乐实体 
+ * 
  * */
 public class Music extends ClassBase{
-	/**标题*/
+	/** 标题 */
 	private String title;
-	/**描述*/
+	/** 描述 */
 	private String description;
-	/**链接*/
+	/** 链接 */
 	private String musicUrl;
-	/**高质量链接*/
+	/** 高质量链接 */
 	private String highMusicUrl;
-	/**缩略图*/
+	/** 缩略图 */
 	private String thumbMediaId;
 	public String getTitle() {
 		return title;
