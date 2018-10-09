@@ -39,9 +39,9 @@
 			</PatternLayout>
 			<Policies>
 				<TimeBasedTriggeringPolicy />
-				<SizeBasedTriggeringPolicy size="2 KB" />
+				<SizeBasedTriggeringPolicy size="200 MB" />
 				</Policies>
-			<DefaultRolloverStrategy max="2" />
+			<DefaultRolloverStrategy max="20" />
 			
 		</RollingFile>
 		<!-- <Routing name="Routing"> <Routes pattern="$${sd:type}"> <Route> <RollingFile 

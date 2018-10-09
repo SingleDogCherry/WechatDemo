@@ -100,7 +100,8 @@ public class WechatTokenServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		out.print(xmlString);
 		out.close();
-
+		logger.info(xmlString);
+		logger.info("方法的结束地方");
 	}
 
 	public String getSignature() {
