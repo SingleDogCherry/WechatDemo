@@ -27,10 +27,10 @@ public class Log4jTest {
         logger.fatal("this is a fatal");
 */   
 		logger.trace("Entering application  ");
-		Bar bar = new Bar();
+		/*Bar bar = new Bar();
 		if (!bar.doIt()) {
 			logger.error("忘记做了");
-		}
+		}*/
 		logger.trace("z做完啦");
 
 	}
