@@ -9,8 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.wechat.global.enums.MsgTypeEnum;
 import com.wechat.global.service.EventService;
-import com.wechat.global.service.inter.EventServiceInterface;
-import com.wechat.global.servlet.WechatTokenServlet;
+import com.wechat.global.service.inter.ServiceInterface;
 /**
  * 事件处理分发类
  * 
@@ -24,10 +23,10 @@ public class EventServiceDispatcher {
 		//TODO:事件处理部分需要重写，逻辑错误
 		String msgType = returnMap.get("MsgType");
 		if (MsgTypeEnum.MsgType_Event.equals(msgType)) {
-			EventServiceInterface esInter = new EventService();
-			xmlstring = esInter.execRequestMap(returnMap);
+			ServiceInterface esInter = new EventService();
+			xmlstring = esInter.execRequest(returnMap);
 		} else {
-			logger.info("错误的请求信息");
+			logger.error("错误的请求信息");
 			
 		}
 

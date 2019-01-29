@@ -4,13 +4,13 @@ import java.util.Date;
 import java.util.Map;
 
 import com.wechat.global.entity.MessageText;
-import com.wechat.global.service.inter.EventServiceInterface;
+import com.wechat.global.service.inter.ServiceInterface;
 import com.wechat.global.util.MessageUtil;
 /***
  *事件处理类 
  * 
  */
-public class EventService implements EventServiceInterface {
+public class EventService implements ServiceInterface {
 
 	private String xmlstring;
 
@@ -22,8 +22,11 @@ public class EventService implements EventServiceInterface {
 		this.xmlstring = xmlstring;
 	}
 
+
 	@Override
-	public String execRequestMap(Map<String, String> requestMap) {
+	public String execRequest(Map<String, String> requestMap) {
+		// TODO Auto-generated method stub
+
 		MessageText mst = new MessageText();
 
 		mst.setToUserName(requestMap.get("FromUserName"));// 发送消息的人和接收消息的人是一个人，所以要相反赋值
@@ -35,6 +38,7 @@ public class EventService implements EventServiceInterface {
 		mst.setMsgId(requestMap.get("MsgId"));
 		xmlstring=(MessageUtil.beanToXml(mst));
 		return xmlstring;
+	
 	}
 
 }

@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.Map;
 
 import com.wechat.global.entity.MessageText;
-import com.wechat.global.service.inter.MessageServiceInterface;
+import com.wechat.global.service.inter.ServiceInterface;
 import com.wechat.global.util.MessageUtil;
 
 
@@ -12,7 +12,7 @@ import com.wechat.global.util.MessageUtil;
  * 文本消息处理类
  * */
 public class MessageTextService implements
-		MessageServiceInterface {
+ServiceInterface {
 
 	@Override
 	public String execRequest(Map<String, String> requestMap) {

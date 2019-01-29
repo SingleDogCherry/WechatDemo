@@ -7,10 +7,10 @@ import java.util.Map;
 
 import com.wechat.global.entity.MessageNewsResp;
 import com.wechat.global.entity.News;
-import com.wechat.global.service.inter.MessageServiceInterface;
+import com.wechat.global.service.inter.ServiceInterface;
 import com.wechat.global.util.MessageUtil;
 
-public class MessageImageService implements MessageServiceInterface {
+public class MessageImageService implements ServiceInterface {
 
 	@Override
 	public String execRequest(Map<String, String> requestMap) {
