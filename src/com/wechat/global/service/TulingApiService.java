@@ -15,7 +15,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.wechat.global.servlet.WechatTokenServlet;
 
 /**
  * 图灵API服务
@@ -120,6 +119,7 @@ public class TulingApiService {
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		}
 		return result;
 	}
