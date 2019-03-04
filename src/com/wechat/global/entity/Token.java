@@ -23,8 +23,11 @@ public class Token extends ClassBase {
 	public void setExpiresIn(int expiresIn) {
 		this.expiresIn = expiresIn;
 	}
-	
-	
+	@Override
+	public String toString() {
+		return "Token内容  accessToken："+accessToken+";expiresIn:"+expiresIn;
+		
+	}
 	
 
 }
