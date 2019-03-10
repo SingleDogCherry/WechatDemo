@@ -5,6 +5,18 @@ import java.util.HashSet;
 import com.wechat.global.entity.base.ClassBase;
 
 public class Lottery extends ClassBase {
+	public static String REF="lottery";
+	public static String PROP_RED_BALL_1="red_ball_1";
+	public static String PROP_RED_BALL_2="red_ball_2";
+	public static String PROP_RED_BALL_3="red_ball_3";
+	public static String PROP_RED_BALL_4="red_ball_4";
+	public static String PROP_RED_BALL_5="red_ball_5";
+	public static String PROP_BLUE_BALL_1="blue_ball_1";
+	public static String PROP_BLUE_BALL_2="blue_ball_2";
+	public static String PROP_REPORT_ID="report_id";
+	
+	
+	
 	private HashSet<String> lottery_red;
 	private HashSet<String> lottery_blue;
 	private int report_id;
@@ -14,7 +26,7 @@ public class Lottery extends ClassBase {
 	private String red_ball_4;
 	private String red_ball_5;
 	private String blue_ball_1;
-
+	private String blue_ball_2;
 	public Lottery(int report_id, String red_ball_1, String red_ball_2, String red_ball_3, String red_ball_4,
 			String red_ball_5, String blue_ball_1, String blue_ball_2) {
 		super();
@@ -96,7 +108,7 @@ public class Lottery extends ClassBase {
 		this.blue_ball_2 = blue_ball_2;
 	}
 
-	private String blue_ball_2;
+	
 
 	public HashSet<?> getLottery_red() {
 		return lottery_red;

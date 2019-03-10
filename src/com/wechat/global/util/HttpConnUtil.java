@@ -1,6 +1,7 @@
 package com.wechat.global.util;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.ConnectException;
@@ -11,26 +12,58 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
-import com.wechat.global.entity.Token;
+import com.wechat.global.hibernate.entity.Token;
 import com.wechat.global.service.Manager.MyX509TrustManager;
 
-
 public class HttpConnUtil {
-	
+
 	static Logger logger = LogManager.getLogger(HttpConnUtil.class.getName());
 	private static Token token;
 	private String appID;
 	private String appSercet;
-	public static  Token getToken() {
+
+	public static void main(String[] args) {
+		token = new Token();
+		HttpConnUtil.getToken2();
+	}
+
+	public static Token getToken2() {
+		String requestUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx7dacb74fd3ec7373&secret=c6a5fc7984a68ab251fc0eb24e07977e";
+		CloseableHttpClient httpclient = HttpClients.createDefault();
 		
-		
-		
-		
-		String requestUrl = ;
+		try {
+			HttpGet httpGet = new HttpGet(requestUrl);
+			CloseableHttpResponse response1 = httpclient.execute(httpGet);
+			logger.info("返回状态:"+response1.getStatusLine().getStatusCode());
+			HttpEntity entity1 = response1.getEntity();
+			JSONObject json = new JSONObject(EntityUtils.toString(entity1));
+			token.setAccessToken((String)json.get("access_token"));
+			token.setExpiresIn(Integer.parseInt((String)json.getString("expires_in")));
+			logger.info(token.toString());
+			EntityUtils.consume(entity1);
+			response1.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error("获取token失败：");
+			e.printStackTrace();
+		}
+
+		return token;
+	}
+
+	public static Token getToken() {
+		String requestUrl = "";
 		try {
 
 			// 建立连接
@@ -65,8 +98,8 @@ public class HttpConnUtil {
 			// 输出返回结果
 			System.out.println(buffer);
 			JSONObject jsonObject = new JSONObject(buffer.toString());
-			logger.info("access_token  :{}",jsonObject.getString("access_token") );
-			logger.info("expires_in  :{}",jsonObject.getString("expires_in") );
+			logger.info("access_token  :{}", jsonObject.getString("access_token"));
+			logger.info("expires_in  :{}", jsonObject.getString("expires_in"));
 			token.setAccessToken(jsonObject.getString("access_token"));
 			token.setExpiresIn(Integer.valueOf(jsonObject.getString("expires_in")));
 		} catch (ConnectException ce) {
@@ -77,23 +110,25 @@ public class HttpConnUtil {
 		return token;
 
 	}
+
 	public static void setToken(Token token) {
 		HttpConnUtil.token = token;
 	}
+
 	public String getAppID() {
 		return appID;
 	}
+
 	public void setAppID(String appID) {
 		this.appID = appID;
 	}
+
 	public String getAppSercet() {
 		return appSercet;
 	}
+
 	public void setAppSercet(String appSercet) {
 		this.appSercet = appSercet;
 	}
-	
-	
-	
 
 }

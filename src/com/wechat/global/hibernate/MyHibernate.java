@@ -2,6 +2,7 @@ package com.wechat.global.hibernate;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -9,15 +10,19 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
-public class MyHibernate {
+public class MyHibernate extends HibernateDaoSupport{
 	// private static SessionFactory sessionFactory;
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main(String[] args) {
+		MyHibernate myHibernate = new MyHibernate();
+		myHibernate.testHibernateS();
+
+	}
+	public void mainHibernate() {
 		SessionFactory sessionFactory;
 		StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build(); // configures settings from
-																							// hibernate.cfg.xml
-				
 		sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
@@ -32,7 +37,13 @@ public class MyHibernate {
 		session.close();
 		//session.saveOrUpdate(object);
 		sessionFactory.close();
-
+	}
+	public void testHibernateS() {
+		Criteria criteriaQuery = this.getHibernateTemplate().getSessionFactory().getCurrentSession().createCriteria(Lottery.class);
+		criteriaQuery.add(Restrictions.eq(Lottery.PROP_BLUE_BALL_1,"02"));
+		Lottery tmp = (Lottery)criteriaQuery.list();
+		tmp.toString();
+		
 	}
 
 	public void testMyHibernate() {
