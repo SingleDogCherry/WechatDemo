@@ -21,7 +21,7 @@ public class Token extends ClassBase  implements Serializable {
 	private Date createTime;
 	
 	public static String ID="id";
-	public static  String REF="Token";
+	public static String REF="Token";
 	public static String PROP_ACCESS_TOKEN="access_token";
 	public static String PRO_EXPIRES_IN="expires_in";
 	public static String PROP_DATE="create_Time";
@@ -49,7 +49,7 @@ public class Token extends ClassBase  implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "Token内容  accessToken："+accessToken+";expiresIn:"+expiresIn;
+		return "Token内容  accessToken："+accessToken+";expiresIn:"+expiresIn+";创建时间:"+createTime;
 		
 	}
 

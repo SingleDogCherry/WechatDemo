@@ -3,5 +3,7 @@
         "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
         "http://struts.apache.org/dtds/struts-2.5.dtd">
 <struts>
-	<include file="com/wechat/global/service/action/struts-core.xml"></include>
+	<include file="com/wechat/global/service/action/struts-core.xml"/>
+	<include file="com/wechat/global/service/action/struts-tokenAction.xml"/>
+	
 </struts>

@@ -1,0 +1,13 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+
+    <package name="token" extends="struts-default" namespace="/token">
+       <action name="getTokenInfo" class="com.wechat.global.service.action.TokenAction" method="getTokenInfo">
+       		<result name="success">
+       			/WEB-INF/pages/token/tokenInfo.jsp
+       		</result>
+       </action>
+    </package>
+</struts>

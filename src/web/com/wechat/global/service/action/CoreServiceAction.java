@@ -15,6 +15,8 @@ import org.dom4j.DocumentException;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.wechat.global.enums.MsgTypeEnum;
+import com.wechat.global.hibernate.manager.TokenManager;
+import com.wechat.global.hibernate.manager.standard.StandardTokenManager;
 import com.wechat.global.service.Dispatcher.EventServiceDispatcher;
 import com.wechat.global.service.Dispatcher.MessageServiceDispatcher;
 import com.wechat.global.util.MessageUtil;
@@ -35,7 +37,8 @@ public class CoreServiceAction extends ActionSupport {
 	private String xml;
 	private Map<String, String> returnMap;
 	private String msgType;
-
+	private TokenManager tokenManager;
+	
 	public String execute() throws HTTPException, IOException, DocumentException {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -49,6 +52,7 @@ public class CoreServiceAction extends ActionSupport {
 		logger.info("CoreServiceAction时间戳" + timestamp);
 		logger.info("CoreServiceAction随机数" + nonce);
 		if (TokenUtil.validateSignature(signature, timestamp, nonce)) {
+			logger.info(tokenManager.getToken().toString());
 			logger.info("CoreServiceAction成功的验证");
 			returnMap = MessageUtil.xmlToMap(request);
 			msgType = returnMap.get("MsgType");
@@ -121,4 +125,15 @@ public class CoreServiceAction extends ActionSupport {
 	public void setMsgType(String msgType) {
 		this.msgType = msgType;
 	}
+
+	
+
+	public TokenManager getTokenManager() {
+		return tokenManager;
+	}
+
+	public void setTokenManager(TokenManager tokenManager) {
+		this.tokenManager = tokenManager;
+	}
+
 }

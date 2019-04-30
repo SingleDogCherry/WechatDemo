@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:dwr="http://directwebremoting.org/schema/spring-dwr/spring-dwr-3.0.xsd"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+             http://www.springframework.org/schema/beans/spring-beans.xsd
+             http://www.springframework.org/schema/tx
+             http://www.springframework.org/schema/tx/spring-tx.xsd
+              http://www.springframework.org/schema/aop
+              http://www.springframework.org/schema/aop/spring-aop.xsd
+              http://www.springframework.org/schema/context
+              http://www.springframework.org/schema/context/spring-context.xsd
+              ">
+
+
+	<!-- 自动扫描 -->
+	<context:component-scan base-package="com.wechat.global.hibernate.entity"></context:component-scan>
+	<!--加载资源对象 -->
+	<context:property-placeholder
+		location="classpath:db.properties" />
+
+	<!-- 实例化c3p0对象 -->
+	<bean class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		id="dataSource">
+		<property name="driverClass" value="${driverClass}"></property>
+		<property name="jdbcUrl" value="${jdbcUrl}"></property>
+		<property name="user" value="${user}"></property>
+		<property name="password" value="${password}"></property>
+		<property name="minPoolSize" value="${minPoolSize}"></property>
+		<property name="maxPoolSize" value="${maxPoolSize}"></property>
+		<property name="initialPoolSize" value="${initialPoolSize}"></property>
+	</bean>
+	<!-- 配置Hibernate的SessionFactory -->
+	<bean
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"
+		id="factory">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation"
+			value="classpath:hibernate.cfg.xml"></property>
+		<property name="mappingLocations"
+			value="classpath:com/wechat/global/hibernate/hbm/*.hbm.xml"></property>
+	</bean>
+	<!-- 配置spring的声明性事务 -->
+	<bean
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager"
+		id="transactionManager"><!-- 要根据hibernate的版本配置 -->
+		<property name="sessionFactory" ref="factory"></property>
+	</bean>
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
+	<!-- 配置事务属性 -->
+	<tx:advice id="txAdvice"
+		transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+	<!-- <aop:config> <aop:pointcut expression="execution(* com.itnba.maya.entities.*.*(..))" 
+		id="pointCut"/> <aop:advisor advice-ref="txAdvice" pointcut-ref="pointCut"/> 
+		</aop:config> -->
+	<!-- 配置 HibernateTemplate -->
+	<bean id="hibernateTemplate"
+		class="org.springframework.orm.hibernate5.HibernateTemplate">
+		<property name="sessionFactory" ref="factory"></property>
+	</bean>
+	<import resource="classpath:spring-service.xml" />
+	<import resource="classpath:spring-manager.xml" />
+	<import resource="classpath:spring-dao.xml" />
+
+</beans>

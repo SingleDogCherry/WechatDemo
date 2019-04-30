@@ -24,7 +24,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.eclipse.jdt.internal.compiler.ast.ThisReference;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -32,8 +31,7 @@ import org.hibernate.cfg.Configuration;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.wechat.global.hibernate.Lottery;
-import com.wechat.global.hibernate.dao.StandardTokenDao;
+import com.wechat.global.hibernate.dao.standard.StandardTokenDao;
 import com.wechat.global.hibernate.entity.Token;
 import com.wechat.global.service.Manager.MyX509TrustManager;
 
@@ -51,10 +49,11 @@ public class HttpConnUtil {
 	public static void main(String[] args) {
 		token = new Token();
 		 json = new JSONObject();
-		HttpConnUtil.getToken2();
+		 token = HttpConnUtil.getToken2();
 		if (null!=token ) {
 			HttpConnUtil.saveToken(token);
 		} 
+		
 	}
 	public static void saveToken2() {
 		
@@ -73,8 +72,9 @@ public class HttpConnUtil {
 		@SuppressWarnings("unchecked")
 		List<Token> result = session.createQuery("from Token ").list();
 
-		for (Token Token : (List<Token>) result) {
-			System.out.println("Lottery (" + Token.toString() + ") : " + Token.toString());
+		for (Token token2 : (List<Token>) result) {
+			logger.info("从数据库服务器取出的token 内容是"+token2.toString());
+			//System.out.println("Token (" + Token.toString() + ") : " + Token.toString());
 		}
 		session.save(token);
 		transaction.commit();
@@ -99,6 +99,7 @@ public class HttpConnUtil {
 					token.setAccessToken((String)json.get("access_token"));
 					token.setExpiresIn(Integer.parseInt((String)json.getString("expires_in")));
 					token.setCreateTime(new Date());
+					logger.info("当前时间为"+new Date());
 					logger.info(token.toString());
 					EntityUtils.consume(entity1);
 				
@@ -119,7 +120,7 @@ public class HttpConnUtil {
 			logger.error("获取token失败：");
 			e.printStackTrace();
 		}
-
+		logger.info("token 的内容"+token.toString());
 		return token;
 	}
 

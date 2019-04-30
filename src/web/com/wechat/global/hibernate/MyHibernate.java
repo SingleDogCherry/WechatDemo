@@ -11,7 +11,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
-import com.wechat.global.hibernate.dao.StandardTokenDao;
+import com.wechat.global.hibernate.dao.standard.StandardTokenDao;
 
 public class MyHibernate extends HibernateDaoSupport{
 	// private static SessionFactory sessionFactory;
